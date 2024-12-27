@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>spring-example-api</module>
+        <module>spring-example-redis</module>
     </modules>
 
     <properties>
