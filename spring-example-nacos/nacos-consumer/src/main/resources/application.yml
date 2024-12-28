@@ -1,0 +1,30 @@
+# Tomcat
+server:
+  port: 8082
+
+# Spring
+spring:
+  application:
+    # 应用名称
+    name: nacos-consumer
+  profiles:
+    # 环境配置
+    active: dev
+
+--- # nacos 配置
+spring:
+  cloud:
+    nacos:
+      # nacos 服务地址
+      server-addr: localhost:8848
+      discovery:
+        # 注册组
+        group: DEFAULT_GROUP
+        namespace: ${spring.profiles.active}
+      config:
+        # 配置组
+        group: DEFAULT_GROUP
+        namespace: ${spring.profiles.active}
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.yml
