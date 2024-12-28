@@ -14,6 +14,7 @@
         <module>spring-example-kafka</module>
         <module>spring-example-rabbitmq</module>
         <module>spring-example-mongodb</module>
+        <module>spring-example-minio</module>
     </modules>
 
     <properties>

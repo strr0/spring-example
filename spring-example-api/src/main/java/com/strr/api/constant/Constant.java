@@ -17,4 +17,7 @@ public interface Constant {
     String RABBITMQ_QUEUE_TOPIC_THREE = "new-queue-topic-three";
     String RABBITMQ_QUEUE_HEADER_TITLE = "new-queue-header-title";
     String RABBITMQ_QUEUE_HEADER_AUTHOR = "new-queue-header-author";
+
+    String MINIO_BUCKET = "test";
+    String MINIO_BASE_PATH = "test/";
 }
