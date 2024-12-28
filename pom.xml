@@ -11,6 +11,7 @@
     <modules>
         <module>spring-example-api</module>
         <module>spring-example-redis</module>
+        <module>spring-example-kafka</module>
     </modules>
 
     <properties>
