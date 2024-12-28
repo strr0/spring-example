@@ -13,6 +13,7 @@
         <module>spring-example-redis</module>
         <module>spring-example-kafka</module>
         <module>spring-example-rabbitmq</module>
+        <module>spring-example-mongodb</module>
     </modules>
 
     <properties>
