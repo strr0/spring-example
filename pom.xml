@@ -12,6 +12,7 @@
         <module>spring-example-api</module>
         <module>spring-example-redis</module>
         <module>spring-example-kafka</module>
+        <module>spring-example-rabbitmq</module>
     </modules>
 
     <properties>
