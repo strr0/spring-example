@@ -16,6 +16,7 @@
         <module>spring-example-mongodb</module>
         <module>spring-example-minio</module>
         <module>spring-example-nacos</module>
+        <module>spring-example-batch</module>
     </modules>
 
     <properties>
