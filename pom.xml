@@ -18,6 +18,7 @@
         <module>spring-example-nacos</module>
         <module>spring-example-batch</module>
         <module>spring-example-shardingsphere</module>
+        <module>spring-example-mybatis</module>
     </modules>
 
     <properties>
