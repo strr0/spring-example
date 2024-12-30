@@ -19,6 +19,7 @@
         <module>spring-example-batch</module>
         <module>spring-example-shardingsphere</module>
         <module>spring-example-mybatis</module>
+        <module>spring-example-liquibase</module>
     </modules>
 
     <properties>
