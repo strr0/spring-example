@@ -10,6 +10,7 @@ import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.insert.Insert;
 import net.sf.jsqlparser.statement.update.Update;
+import net.sf.jsqlparser.statement.update.UpdateSet;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -18,9 +19,7 @@ import org.apache.ibatis.mapping.SqlCommandType;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MyInnerInterceptor extends JsqlParserSupport implements InnerInterceptor {
     private static final Long DEFAULT_USER_ID = 1L;
@@ -34,11 +33,17 @@ public class MyInnerInterceptor extends JsqlParserSupport implements InnerInterc
             PluginUtils.MPBoundSql mpBs = mpSh.mPBoundSql();
             mpBs.sql(parserMulti(mpBs.sql(), ms.getId()));
             // 设置参数映射
+            List<ParameterMapping> mappings = Arrays.asList(new ParameterMapping.Builder(ms.getConfiguration(), "createBy", Long.class).build(),
+                    new ParameterMapping.Builder(ms.getConfiguration(), "createTime", Date.class).build(),
+                    new ParameterMapping.Builder(ms.getConfiguration(), "updateBy", Long.class).build(),
+                    new ParameterMapping.Builder(ms.getConfiguration(), "updateTime", Date.class).build());
             List<ParameterMapping> parameterMappings = mpBs.parameterMappings();
-            parameterMappings.add(new ParameterMapping.Builder(ms.getConfiguration(), "createBy", Long.class).build());
-            parameterMappings.add(new ParameterMapping.Builder(ms.getConfiguration(), "createTime", Date.class).build());
-            parameterMappings.add(new ParameterMapping.Builder(ms.getConfiguration(), "updateBy", Long.class).build());
-            parameterMappings.add(new ParameterMapping.Builder(ms.getConfiguration(), "updateTime", Date.class).build());
+            if (sct == SqlCommandType.INSERT) {
+                parameterMappings.addAll(mappings);
+            } else {
+                // 添加到 where 条件之前
+                parameterMappings.addAll(parameterMappings.size() - 1, mappings);
+            }
             mpBs.parameterMappings(parameterMappings);
         }
     }
@@ -74,6 +79,11 @@ public class MyInnerInterceptor extends JsqlParserSupport implements InnerInterc
 
     @Override
     protected void processUpdate(Update update, int index, String sql, Object obj) {
-        // TODO
+        ArrayList<UpdateSet> updateSets = update.getUpdateSets();
+        int size = updateSets.size();
+        updateSets.add(new UpdateSet(new Column("create_by"), new JdbcParameter(size + 1, false)));
+        updateSets.add(new UpdateSet(new Column("create_time"), new JdbcParameter(size + 2, false)));
+        updateSets.add(new UpdateSet(new Column("update_by"), new JdbcParameter(size + 3, false)));
+        updateSets.add(new UpdateSet(new Column("update_time"), new JdbcParameter(size + 4, false)));
     }
 }
